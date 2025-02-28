@@ -1,19 +1,24 @@
 import { useState, useEffect, useRef } from 'react';
+import React from 'react';
 
-function TodoForm(props) {
-  const [input, setInput] = useState('');
-  const [number, setNumber] = useState(1);
+interface TodoProps {
+  onSubmit : (todo : {id:number, text:string}) => void;
+}
+
+function TodoForm(props : TodoProps) {
+  const [input, setInput] = useState<string>('');
+  const [number, setNumber] = useState<number>(1);
   const inputRef = useRef(null);
 
   useEffect(() => {
     inputRef.current.focus();
   })
 
-  const handleChange = (e) => {
+  const handleChange = (e) : void => {
     setInput(e.target.value);
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) : void=> {
     e.preventDefault();
 
     setNumber(number + 1);

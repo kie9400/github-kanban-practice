@@ -1,5 +1,18 @@
+import React from 'react';
 
-function Todo({ todos, completeTodo, removeTodo }) {
+interface TodoProps {
+  id: number;
+  text : string;
+  isComplete : boolean;
+}
+
+interface TodoComponentProps {
+  todos: TodoProps[];
+  completeTodo: (id: number) => void;
+  removeTodo: (id: number) => void;
+}
+
+function Todo({ todos, completeTodo, removeTodo} : TodoComponentProps) {
 
   return (
     <div className='wrapper-todo'>

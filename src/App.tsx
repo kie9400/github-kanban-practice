@@ -1,29 +1,36 @@
 import TodoForm from './component/TodoForm';
 import Todo from './component/Todo';
+import React from 'react';
 import { useState } from 'react';
 import './todos.css';
 
 function Todos() {
-  const [todos, setTodos] = useState([]);
-
-  const addTodo = todo => {
+  //todos 배열은 Todo[] 타입의 프로퍼티들만 포함한다.
+  const [todos, setTodos] = useState<Todo[]>([]);
+  
+  interface Todo {
+    text: string;
+    id: number;
+    isComplete: boolean;
+  }
+  const addTodo = (todo : Todo): void => {
     if (!todo.text || /^\s*$/.test(todo.text)) {
       return;
     }
 
-    const newTodos = [todo, ...todos];
+    const newTodos: Todo[] = [todo, ...todos];
 
     setTodos(newTodos);
   };
 
 
-  const removeTodo = id => {
-    const removeArr = [...todos].filter(todo => todo.id !== id);
+  const removeTodo = (id : number) : void => {
+    const removeArr: Todo[] = [...todos].filter(todo => todo.id !== id);
 
     setTodos(removeArr);
   };
 
-  const completeTodo = id => {
+  const completeTodo = (id : number) : void => {
     const completedTodo = todos.map(todo => {
       if (todo.id === id) {
         todo.isComplete = !todo.isComplete
