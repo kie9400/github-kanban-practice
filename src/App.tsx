@@ -4,34 +4,37 @@ import React from 'react';
 import { useState } from 'react';
 import './todos.css';
 
-function Todos() {
-  //todos 배열은 Todo[] 타입의 프로퍼티들만 포함한다.
-  const [todos, setTodos] = useState<Todo[]>([]);
-  
-  interface Todo {
-    text: string;
-    id: number;
-    isComplete: boolean;
-  }
-  const addTodo = (todo : Todo): void => {
+export interface TodoProps {
+  text: string;
+  id: number;
+  isComplete: boolean;
+}
+
+function Todos() {  
+  //todos 배열은 TodoProps[] 타입의 프로퍼티들만 포함한다. 
+  //useState가 todos의 타입을 결정하기 때문에 useState에 타입을 지정해주어야 한다.
+  //첫번째 요소는 변수, 두번째 요소는 상태변경 함수
+  const [todos, setTodos] = useState<TodoProps[]>([]);
+
+  const addTodo = (todo : TodoProps): void => {
     if (!todo.text || /^\s*$/.test(todo.text)) {
       return;
     }
 
-    const newTodos: Todo[] = [todo, ...todos];
+    const newTodos: TodoProps[] = [todo, ...todos];
 
     setTodos(newTodos);
   };
 
 
   const removeTodo = (id : number) : void => {
-    const removeArr: Todo[] = [...todos].filter(todo => todo.id !== id);
+    const removeArr: TodoProps[] = [...todos].filter(todo => todo.id !== id);
 
     setTodos(removeArr);
   };
 
   const completeTodo = (id : number) : void => {
-    const completedTodo = todos.map(todo => {
+    const completedTodo: TodoProps[] = todos.map(todo => {
       if (todo.id === id) {
         todo.isComplete = !todo.isComplete
       }

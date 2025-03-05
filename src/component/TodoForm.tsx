@@ -1,31 +1,33 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
 import React from 'react';
+import { TodoProps } from '../App';
 
-interface TodoProps {
-  onSubmit : (todo : {id:number, text:string}) => void;
+interface TodoFormProps {
+  onSubmit : (todo : TodoProps) => void;
 }
 
-function TodoForm(props : TodoProps) {
+function TodoForm({onSubmit} : TodoFormProps) {
   const [input, setInput] = useState<string>('');
   const [number, setNumber] = useState<number>(1);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   })
 
-  const handleChange = (e) : void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) : void => {
     setInput(e.target.value);
   }
 
-  const handleSubmit = (e) : void=> {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) : void=> {
     e.preventDefault();
 
     setNumber(number + 1);
 
-    props.onSubmit({
+    onSubmit({
       id: number,
-      text: input
+      text: input,
+      isComplete: false,
     });
 
     setInput('');
