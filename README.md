@@ -1,1 +1,1 @@
-# JavaScript를 TypeScript로 포팅하기 과제
+# JavaScript를 TypeScript로 포팅하기
